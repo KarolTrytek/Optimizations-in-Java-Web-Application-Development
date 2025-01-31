@@ -5,8 +5,8 @@ import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import pl.edu.pk.optimizationsapp.api.tools.scheduler.dto.CounterDto;
 import pl.edu.pk.optimizationsapp.data.domain.adm.Counters;
 import pl.edu.pk.optimizationsapp.data.domain.custion.IJobOfferCounter;
@@ -20,6 +20,7 @@ import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlPlacowka;
 import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlPlacowka_;
 import pl.edu.pk.optimizationsapp.data.repository.CountersRepository;
 import pl.edu.pk.optimizationsapp.data.repository.JobOfferRepository;
+import pl.edu.pk.optimizationsapp.utils.CacheKeys;
 import pl.edu.pk.optimizationsapp.utils.JPAUtils;
 import pl.edu.pk.optimizationsapp.utils.NumberUtils;
 
@@ -88,7 +89,7 @@ public class CounterService {
 
     }
 
-    @Transactional
+//    @Transactional
     public CounterDto getCountersWithSchedlock(LanguageEnum language) {
         var proposalNumber = countersRepository.findById(LICZNIK_AKTYWNYCH_PROPOZYCJI + language.name());
 
@@ -100,6 +101,11 @@ public class CounterService {
                 formatNumber(countersRepository.findById(LICZNIK_AKTYWNYCH_PROPOZYCJI + language.name()).map(Counters::getValue).orElse(0L)),
                 formatNumber(countersRepository.findById(LICZNIK_AKTYWNYCH_OFERT_Z_UP + language.name()).map(Counters::getValue).orElse(0L)),
                 formatNumber(countersRepository.findById(LICZNIK_MIEJSC_PRACY_AKTYWNYCH_OFERT_Z_UP + language.name()).map(Counters::getValue).orElse(0L)));
+    }
+
+    @Cacheable(cacheNames = CacheKeys.OFFERS_COUNTERS)
+    public CounterDto getCountersWithSchedlockFromCache(LanguageEnum language) {
+        return getCountersWithSchedlock(language);
     }
 
     private long getProposalsNumber(LanguageEnum language) {
