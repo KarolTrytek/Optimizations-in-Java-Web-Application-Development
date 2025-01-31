@@ -1,4 +1,4 @@
-package pl.edu.pk.optimizationsapp.data.domain;
+package pl.edu.pk.optimizationsapp.data.domain.slowniki;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,31 +27,53 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "sl_wart_dod", schema = "slowniki")
-public class SlWartDod implements Serializable {
+@Table(name = "sl_def_wart_dod", schema = "slowniki")
+public class SlDefWartDod implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "id_wartosci", nullable = false)
-    @SequenceGenerator(name = "seq_sl_wart_dod", sequenceName = "slowniki.seq_sl_wart_dod", allocationSize = 1)
-    @GeneratedValue(generator = "seq_sl_wart_dod", strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sl_def_wart_dod_id_gen")
+	@SequenceGenerator(name = "sl_def_wart_dod_id_gen", sequenceName = "seq_sl_def_wart_dod", allocationSize = 1)
+	@Column(name = "id_def_wart_dod", nullable = false)
 	private Long id;
 
 	@Size(max = 50)
 	@NotNull
-	@Column(name = "id_pozycji", nullable = false, length = 50)
-	private String idPozycji;
+	@Column(name = "nazwa", nullable = false, length = 50)
+	private String nazwa;
 
 	@NotNull
 	@Column(name = "version", nullable = false, columnDefinition = "integer default 0")
 	private Integer version;
 
-	@Size(max = 20)
+	@Size(max = 300)
+	@Column(name = "opis", length = 300)
+	private String opis;
+
+	@Size(max = 1)
 	@NotNull
-	@Column(name = "tabela", nullable = false, length = 20)
-	private String tabela;
+	@Column(name = "czy_slownikowany", nullable = false, length = 1)
+	private String czySlownikowany;
+
+	@Size(max = 1)
+	@NotNull
+	@Column(name = "czy_wyswietlac", nullable = false, length = 1)
+	private String czyWyswietlac;
+
+	@Size(max = 500)
+	@Column(name = "format", length = 500)
+	private String format;
+
+	@NotNull
+	@Column(name = "nr_kolumny", nullable = false)
+	private Integer nrKolumny;
+
+	@Size(max = 2)
+	@NotNull
+	@Column(name = "typ_wart", nullable = false, length = 2)
+	private String typWart;
 
 	@Column(name = "wartosc_da")
 	private LocalDate wartoscDa;
@@ -70,8 +92,11 @@ public class SlWartDod implements Serializable {
 	@Column(name = "wartosc_c", length = 400)
 	private String wartoscC;
 
-	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "id_def_wart_dod", nullable = false)
-	private SlDefWartDod idDefWartDod;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_slownika")
+	private SlDefSlow idSlownika;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_slownika_wartosc")
+	private SlDefSlow idSlownikaWartosc;
 }

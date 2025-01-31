@@ -1,4 +1,4 @@
-package pl.edu.pk.optimizationsapp.data.domain;
+package pl.edu.pk.optimizationsapp.data.domain.slowniki;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
