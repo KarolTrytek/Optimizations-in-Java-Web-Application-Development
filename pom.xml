@@ -30,6 +30,7 @@
         <java.version>21</java.version>
         <querydsl.version>5.1.0</querydsl.version>
         <hibernate.version>6.6.5.Final</hibernate.version>
+        <version.shedlock>5.13.0</version.shedlock>
     </properties>
     <dependencies>
         <dependency>
@@ -80,6 +81,16 @@
             <artifactId>querydsl-jpa</artifactId>
             <version>${querydsl.version}</version>
             <classifier>jakarta</classifier>
+        </dependency>
+        <dependency>
+            <groupId>net.javacrumbs.shedlock</groupId>
+            <artifactId>shedlock-spring</artifactId>
+            <version>${version.shedlock}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.javacrumbs.shedlock</groupId>
+            <artifactId>shedlock-provider-jdbc-template</artifactId>
+            <version>${version.shedlock}</version>
         </dependency>
     </dependencies>
     <build>

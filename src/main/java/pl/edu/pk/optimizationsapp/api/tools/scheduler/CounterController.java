@@ -32,4 +32,10 @@ public class CounterController {
     }
 
 
+    @GetMapping("with-schedlock")
+//    @Operation(summary = "Licznik ofert pracy, wydarzeń, propozycji, miejsc pracy", operationId = "getCountersWithSchedlock")
+    public CounterDto getCountersWithSchedlock(@RequestParam(name = "jezyk", required = false, defaultValue = "PL") LanguageEnum language) {
+        return counterService.getCountersWithSchedlock(language);
+    }
+
 }

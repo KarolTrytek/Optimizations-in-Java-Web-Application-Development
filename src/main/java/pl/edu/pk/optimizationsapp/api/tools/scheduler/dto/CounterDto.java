@@ -11,9 +11,6 @@ public record CounterDto(
         //@Schema(description = "Ilość ofert pracy")
         String jobOffersNumberFromEO,
 
-        //@Schema(description = "Ilość wydarzeń")
-        String eventsNumber,
-
         //@Schema(description = "Ilość miejsc pracy")
         String workPlacesNumber
 
