@@ -38,4 +38,10 @@ public class CounterController {
         return counterService.getCountersWithSchedlock(language);
     }
 
+    @GetMapping("with-schedlock/from-cache")
+//    @Operation(summary = "Licznik ofert pracy, wydarzeń, propozycji, miejsc pracy", operationId = "getCountersUsingCache")
+    public CounterDto getCountersWithSchedlockFromCache(@RequestParam(name = "jezyk", required = false, defaultValue = "PL") LanguageEnum language) {
+        return counterService.getCountersWithSchedlockFromCache(language);
+    }
+
 }
