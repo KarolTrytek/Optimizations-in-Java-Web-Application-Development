@@ -1,5 +1,7 @@
 package pl.edu.pk.optimizationsapp.api.tools.scheduler;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,35 +13,33 @@ import pl.edu.pk.optimizationsapp.data.domain.ofz.LanguageEnum;
 
 @Slf4j
 @RequestMapping(value = "counter")
-//@Tag(name = "Oferta")
+@Tag(name = "Counter")
 @RestController
-//@Validated
 @RequiredArgsConstructor
 public class CounterController {
 
     private final CounterService counterService;
 
     @GetMapping("separate-queries")
-//    @Operation(summary = "Licznik ofert pracy, wydarzeń, propozycji, miejsc pracy", operationId = "getCountersFromSeparateQueries")
+    @Operation(summary = "Count job offers, proposals and jobs using separate queries", operationId = "getCountersFromSeparateQueries")
     public CounterDto getCountersFromSeparateQueries(@RequestParam(name = "language", required = false, defaultValue = "PL") LanguageEnum language) {
         return counterService.getCountersFromSeparateQueries(language);
     }
 
     @GetMapping("joined-queries")
-//    @Operation(summary = "Licznik ofert pracy, wydarzeń, propozycji, miejsc pracy", operationId = "getCountersFromJoinedQueries")
+    @Operation(summary = "Count job offers, proposals and jobs using joined queries", operationId = "getCountersFromJoinedQueries")
     public CounterDto getCountersFromJoinedQueries(@RequestParam(name = "jezyk", required = false, defaultValue = "PL") LanguageEnum language) {
         return counterService.getCountersFromJoinedQueries(language);
     }
 
-
     @GetMapping("with-schedlock")
-//    @Operation(summary = "Licznik ofert pracy, wydarzeń, propozycji, miejsc pracy", operationId = "getCountersWithSchedlock")
+    @Operation(summary = "Count job offers, proposals and jobs using schedlock", operationId = "getCountersWithSchedlock")
     public CounterDto getCountersWithSchedlock(@RequestParam(name = "jezyk", required = false, defaultValue = "PL") LanguageEnum language) {
         return counterService.getCountersWithSchedlock(language);
     }
 
     @GetMapping("with-schedlock/from-cache")
-//    @Operation(summary = "Licznik ofert pracy, wydarzeń, propozycji, miejsc pracy", operationId = "getCountersUsingCache")
+    @Operation(summary = "Count job offers, proposals and jobs using schedlock and caching ", operationId = "getCountersUsingCache")
     public CounterDto getCountersWithSchedlockFromCache(@RequestParam(name = "jezyk", required = false, defaultValue = "PL") LanguageEnum language) {
         return counterService.getCountersWithSchedlockFromCache(language);
     }
