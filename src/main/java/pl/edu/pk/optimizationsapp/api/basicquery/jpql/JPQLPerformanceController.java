@@ -1,4 +1,4 @@
-package pl.edu.pk.optimizationsapp.api.basicquery.querydsl;
+package pl.edu.pk.optimizationsapp.api.basicquery.jpql;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@RequestMapping(value = "querydsl/basic/")
-@Tag(name = "Basic QueryDsl")
+@RequestMapping(value = "jpgl/basic/")
+@Tag(name = "Basic JPQL")
 @RestController
 @RequiredArgsConstructor
-public class QueryDslPerformanceController {
+public class JPQLPerformanceController {
 
-    private final QueryDslPerformanceService queryDslPerformanceService;
-
+    private final JPQLPerformanceService jpqlPerformanceService;
 
     @GetMapping("{id}")
     @Operation(summary = "Returns an offer for the identifier", operationId = "getJobOfferById")
@@ -25,10 +24,10 @@ public class QueryDslPerformanceController {
         var time = System.currentTimeMillis();
         log.debug("getOfertyPracyById one attempt start");
 
-        queryDslPerformanceService.getOfertaPracyById(id);
+        jpqlPerformanceService.getOfertaPracyById(id);
 
         log.debug("getOfertyPracyById one attempt stop {} ms", System.currentTimeMillis() - time);
-        return  "Getting an job offer with id: " + id +" using Querydsl took: " + (System.currentTimeMillis() - time) + "ms";
+        return  "Getting an job offer with id: " + id +" using JPQL took: " + (System.currentTimeMillis() - time) + "ms";
 
     }
 
@@ -39,11 +38,11 @@ public class QueryDslPerformanceController {
         log.debug("findOfertyPracyById start, attempts {}", attempts);
 
         for (int i = 0; i < attempts; i++) {
-            queryDslPerformanceService.getOfertaPracyById(id);
+            jpqlPerformanceService.getOfertaPracyById(id);
         }
 
         log.debug("getOfertyPracyById stop {} ms, attempts {}", System.currentTimeMillis() - time, attempts);
-        return "Getting  an job offer with id: " + id + " for " + attempts + " attempts using Querydsl took: " + (System.currentTimeMillis() - time) + "ms";
+        return "Getting  an job offer with id: " + id + " for " + attempts + " attempts using JPQL took: " + (System.currentTimeMillis() - time) + "ms";
     }
 
 }

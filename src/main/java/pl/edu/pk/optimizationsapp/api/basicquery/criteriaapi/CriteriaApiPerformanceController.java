@@ -1,4 +1,4 @@
-package pl.edu.pk.optimizationsapp.api.basicquery.querydsl;
+package pl.edu.pk.optimizationsapp.api.basicquery.criteriaapi;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@RequestMapping(value = "querydsl/basic/")
-@Tag(name = "Basic QueryDsl")
+@RequestMapping(value = "criteria-api/basic/")
+@Tag(name = "Basic Criteria API")
 @RestController
 @RequiredArgsConstructor
-public class QueryDslPerformanceController {
+public class CriteriaApiPerformanceController {
 
-    private final QueryDslPerformanceService queryDslPerformanceService;
-
+    private final CriteriaApiPerformanceService criteriaApiPerformanceService;
 
     @GetMapping("{id}")
     @Operation(summary = "Returns an offer for the identifier", operationId = "getJobOfferById")
@@ -25,10 +24,10 @@ public class QueryDslPerformanceController {
         var time = System.currentTimeMillis();
         log.debug("getOfertyPracyById one attempt start");
 
-        queryDslPerformanceService.getOfertaPracyById(id);
+        criteriaApiPerformanceService.getOfertaPracyById(id);
 
         log.debug("getOfertyPracyById one attempt stop {} ms", System.currentTimeMillis() - time);
-        return  "Getting an job offer with id: " + id +" using Querydsl took: " + (System.currentTimeMillis() - time) + "ms";
+        return  "Getting an job offer with id: " + id +" using Criteria API took: " + (System.currentTimeMillis() - time) + "ms";
 
     }
 
@@ -39,11 +38,12 @@ public class QueryDslPerformanceController {
         log.debug("findOfertyPracyById start, attempts {}", attempts);
 
         for (int i = 0; i < attempts; i++) {
-            queryDslPerformanceService.getOfertaPracyById(id);
+            criteriaApiPerformanceService.getOfertaPracyById(id);
         }
 
         log.debug("getOfertyPracyById stop {} ms, attempts {}", System.currentTimeMillis() - time, attempts);
-        return "Getting  an job offer with id: " + id + " for " + attempts + " attempts using Querydsl took: " + (System.currentTimeMillis() - time) + "ms";
+        return "Getting  an job offer with id: " + id + " for " + attempts + " attempts using Criteria API took: " + (System.currentTimeMillis() - time) + "ms";
     }
+
 
 }

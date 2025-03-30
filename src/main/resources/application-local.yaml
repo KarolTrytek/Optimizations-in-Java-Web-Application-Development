@@ -1,0 +1,14 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none  # TODO ddl-auto
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+logging:
+  level:
+    root: INFO
+    pl.edu.pk.optimizationsapp: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
