@@ -254,7 +254,7 @@ public class JobOffer implements Serializable {
 	@Size(max = 256)
 	@NotNull
 	@Column(name = "stanow_ofer", nullable = false, length = 256)
-	private String stanowOfer;
+	private String jobTitle;
 
 	@Column(name = "zakres_obowiazkow", length = Integer.MAX_VALUE)
 	private String zakresObowiazkow;
@@ -294,10 +294,10 @@ public class JobOffer implements Serializable {
 	private LocalDate dataKoncaZatrud;
 
 	@Column(name = "wynagr_od", precision = 10, scale = 2)
-	private BigDecimal wynagrOd = BigDecimal.ZERO;
+	private BigDecimal salaryFrom = BigDecimal.ZERO;
 
 	@Column(name = "wynagr_do", precision = 10, scale = 2)
-	private BigDecimal wynagrDo = BigDecimal.ZERO;
+	private BigDecimal salaryTo = BigDecimal.ZERO;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_waluta")
@@ -781,10 +781,10 @@ public class JobOffer implements Serializable {
 
 	@Transient
 	public BigDecimal getWynagrodzenie() {
-		if (wynagrOd != null) {
-			return wynagrOd;
+		if (salaryFrom != null) {
+			return salaryFrom;
 		} else {
-			return wynagrDo != null ? wynagrDo : BigDecimal.ZERO;
+			return salaryTo != null ? salaryTo : BigDecimal.ZERO;
 		}
 	}
 }
