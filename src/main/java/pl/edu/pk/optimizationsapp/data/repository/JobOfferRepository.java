@@ -1,11 +1,15 @@
 package pl.edu.pk.optimizationsapp.data.repository;
 
+import org.springframework.data.domain.Limit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import pl.edu.pk.optimizationsapp.data.domain.custion.IJobOfferCounter;
 import pl.edu.pk.optimizationsapp.data.domain.ofz.JobOffer;
 import pl.edu.pk.optimizationsapp.data.domain.ofz.LanguageEnum;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 public interface JobOfferRepository extends JpaRepository<JobOffer, Long>, JpaSpecificationExecutor<JobOffer> {
 
@@ -79,4 +83,24 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long>, JpaSp
                     """
     )
     IJobOfferCounter getJobOfferCounterForPolish();
+
+
+    List<JobOffer> findBySalaryFromGreaterThanEqualOrderByJobTitle(BigDecimal salaryFrom, Limit limit);
+
+    @Query(value = """
+            select j from ofz.oferty_pracy j
+            where j.wynagr_od >= :salaryFrom
+            order by j.stanow_ofer
+            limit :limit
+            """, nativeQuery = true)
+    List<Object[]> findBySalaryFromGreaterThanEqualOrderByJobTitleNativeQuery(BigDecimal salaryFrom, int limit);
+
+    @Query(value = """
+            select j from JobOffer j
+            where j.salaryFrom >= :salaryFrom
+            order by j.jobTitle
+            limit :limit
+            """)
+    List<JobOffer> findBySalaryFromGreaterThanEqualOrderByJobTitleJPQL(BigDecimal salaryFrom, int limit);
+
 }

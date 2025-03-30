@@ -7,7 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.math.BigDecimal;
 
 @Slf4j
 @RequestMapping(value = "jpgl/basic/")
@@ -43,6 +46,18 @@ public class JPQLPerformanceController {
 
         log.debug("getOfertyPracyById stop {} ms, attempts {}", System.currentTimeMillis() - time, attempts);
         return "Getting  an job offer with id: " + id + " for " + attempts + " attempts using JPQL took: " + (System.currentTimeMillis() - time) + "ms";
+    }
+
+    @GetMapping("list")
+    @Operation(summary = "Returns a list of jobs with salaries greater than the specified salary sorted by jobTitle", operationId = "findJobOffersBySalaryFromGreaterThanEqualOrderByJobTitleLimit")
+    public String findJobOffersBySalaryFromGreaterThanEqualOrderByJobTitleLimit(@RequestParam BigDecimal salaryFrom, @RequestParam int limit) {
+        var time = System.currentTimeMillis();
+        log.debug("findJobOffersBySalaryFromGreaterThanEqualOrderByJobTitleLimit JPQL start");
+
+        jpqlPerformanceService.findJobOffersBySalaryFromGreaterThanEqualOrderByJobTitleLimit(salaryFrom, limit);
+
+        log.debug("findJobOffersBySalaryFromGreaterThanEqualOrderByJobTitleLimit Spring Data JPA stop {} ms", System.currentTimeMillis() - time);
+        return  "Getting a list of " + limit + " jobs with salaries greater than: " + salaryFrom + " using JPQL took: " + (System.currentTimeMillis() - time) + "ms";
     }
 
 }
