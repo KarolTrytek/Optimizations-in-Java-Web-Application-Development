@@ -9,6 +9,16 @@ import pl.edu.pk.optimizationsapp.data.domain.ofz.LanguageEnum;
 
 public interface JobOfferRepository extends JpaRepository<JobOffer, Long>, JpaSpecificationExecutor<JobOffer> {
 
+    @Query(value = """
+            select j from ofz.oferty_pracy j where j.id = :id
+            """, nativeQuery = true)
+    Object[] getByIdNativeQuery(Long id);
+
+    @Query(value = """
+            select j from JobOffer j where j.id = :id
+            """)
+    JobOffer getByIdJPQL(Long id);
+
     @Query(
             """
                     SELECT
@@ -69,5 +79,4 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long>, JpaSp
                     """
     )
     IJobOfferCounter getJobOfferCounterForPolish();
-
 }

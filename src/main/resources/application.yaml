@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: OptimizationsApp
+  datasource:
+    url: jdbc:postgresql://localhost:5432/optimizations_java_master_thesis
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+server:
+  port: 8037
+
+optimization-app:
+  proces:
+    calculate-counters:
+      refreschTime: "0 */10 * * * *"
+  cache:
+    offersCountersRefreshMinutes: ${OFFERS_COUNTERS_REFRESH_CACHE_MINUTES:10}

@@ -1,0 +1,11 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: none  # TODO ddl-auto
+
+logging:
+  level:
+    root: INFO
+    sql: OFF
+    org.hibernate.SQL: OFF
+    org.hibernate.type.descriptor.sql.BasicBinder: OFF
