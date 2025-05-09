@@ -7,10 +7,13 @@ import org.springframework.data.domain.Limit;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.edu.pk.optimizationsapp.data.domain.ofz.JobOffer;
+import pl.edu.pk.optimizationsapp.data.domain.ofz.TypOfertyEnum;
 import pl.edu.pk.optimizationsapp.data.repository.JobOfferRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
+
+import static pl.edu.pk.optimizationsapp.utils.Constants.DATA_PRZYJ_ZGLOSZENIA;
 
 @Service
 @Slf4j
@@ -42,6 +45,10 @@ public class SpringDataJpaPerformanceService {
     @Transactional
     public List<JobOffer> findJobOffersBySalaryFromGreaterThanEqualOrderByJobTitleLimit(BigDecimal wynagrodzenieOd, int limit) {
         return jobOfferRepository.findBySalaryFromGreaterThanEqualOrderByJobTitle(wynagrodzenieOd, Limit.of(limit));
+    }
+
+    public List<JobOffer> findAllJobOffersWithJobTypeInAnyList(List<TypOfertyEnum> types1, List<TypOfertyEnum> types2) {
+        return jobOfferRepository.findByJobTypeInOrJobTypeInAndDataPrzyjZgloszAfter(types1, types2, DATA_PRZYJ_ZGLOSZENIA);
     }
 
 }

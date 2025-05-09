@@ -388,7 +388,7 @@ public class JobOffer implements Serializable {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "typ_oferty", nullable = false)
-	private TypOfertyEnum typOferty;
+	private TypOfertyEnum jobType;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_kateg_oferty")
