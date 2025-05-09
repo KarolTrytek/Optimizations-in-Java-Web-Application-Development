@@ -113,7 +113,7 @@ public class CounterService {
             List<Predicate> predicatesList = new ArrayList<>();
 
             JPAUtils.setEqual(root, cb, predicatesList, JobOffer_.STATUS, StatusOfertyEnum.AKTYWNE.getCode());
-            JPAUtils.setNotEqual(root, cb, predicatesList, JobOffer_.TYP_OFERTY, TypOfertyEnum.SPOL_UZYTECZ);
+            JPAUtils.setNotEqual(root, cb, predicatesList, JobOffer_.JOB_TYPE, TypOfertyEnum.SPOL_UZYTECZ);
             JPAUtils.setEqual(root, cb, predicatesList, JobOffer_.KOD_JEZYKA, language.getId());
 
             if (language != LanguageEnum.PL) {
@@ -136,7 +136,7 @@ public class CounterService {
             List<Predicate> predicatesList = new ArrayList<>();
 
             JPAUtils.setEqual(root, cb, predicatesList, JobOffer_.STATUS, StatusOfertyEnum.AKTYWNE.getCode());
-            JPAUtils.setEqual(root, cb, predicatesList, JobOffer_.TYP_OFERTY, TypOfertyEnum.OFERTA_PRACY);
+            JPAUtils.setEqual(root, cb, predicatesList, JobOffer_.JOB_TYPE, TypOfertyEnum.OFERTA_PRACY);
 
             Join<JobOffer, SlPlacowka> placowkaJoin = root.join(JobOffer_.ID_PLACOWKI_ZASILAJACEJ, JoinType.INNER);
             JPAUtils.setEqual(placowkaJoin, cb, predicatesList, SlPlacowka_.TYP_PLACOWKI, UP);

@@ -1,9 +1,8 @@
 package pl.edu.pk.optimizationsapp.data.domain.ofz;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +22,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.SQLInsert;
 import org.hibernate.annotations.SQLUpdate;
+import pl.edu.pk.optimizationsapp.data.converter.StatusOfertyEnumConverter;
 import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlElemSlowCentr;
 import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlKodPocztowy;
 import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlMiejscowosc;
@@ -142,7 +142,7 @@ public class Adresy implements Serializable {
 	@Size(max = 1)
 	@NotNull
 	@Column(name = "status", nullable = false, length = 1)
-    @Enumerated(EnumType.STRING)
+	@Convert(converter = StatusOfertyEnumConverter.class)
 	private StatusOfertyEnum status;
 
 	@NotNull
