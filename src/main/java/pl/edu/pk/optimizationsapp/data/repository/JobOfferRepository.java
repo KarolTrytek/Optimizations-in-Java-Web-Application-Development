@@ -4,8 +4,10 @@ import org.springframework.data.domain.Limit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import pl.edu.pk.optimizationsapp.data.domain.custion.IJobOfferCounter;
 import pl.edu.pk.optimizationsapp.data.domain.ofz.JobOffer;
+import pl.edu.pk.optimizationsapp.data.domain.ofz.JobOfferStatusEnum;
 import pl.edu.pk.optimizationsapp.data.domain.ofz.LanguageEnum;
 import pl.edu.pk.optimizationsapp.data.domain.ofz.TypOfertyEnum;
 
@@ -120,4 +122,18 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long>, JpaSp
     List<Object[]> findAllJobOffersWithJobTypeInAnyListNativeQuery(List<String> types1, List<String> types2, LocalDate dataPrzyjZglosz);
 
     List<JobOffer> findByJobTypeInOrJobTypeInAndDataPrzyjZgloszAfter(List<TypOfertyEnum> types1, List<TypOfertyEnum> types2, LocalDate dataPrzyjZglosz);
+
+
+    @Query("""
+            SELECT DISTINCT upper(jobTitle)
+            FROM JobOffer
+            WHERE status = :status
+            AND jobTitle ilike CONCAT('%', :name, '%')
+            AND kodJezyka = :language
+            ORDER BY upper(jobTitle)
+            LIMIT :maxLimit
+            """)
+    List<String> findJobTitleByJobTitleContainingIgnoreCaseAndLanguageLimit(String name, String language, JobOfferStatusEnum status, @Param("maxLimit") Long maxLimit);
+
+
 }
