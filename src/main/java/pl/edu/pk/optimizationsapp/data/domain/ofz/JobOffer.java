@@ -239,7 +239,7 @@ public class JobOffer implements Serializable {
 	@Convert(converter = StatusOfertyEnumConverter.class)
 //	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "status", nullable = false)
-	private StatusOfertyEnum status;
+	private JobOfferStatusEnum status;
 
 	@NotNull
 	@Column(name = "data_przyj_zglosz", nullable = false)
