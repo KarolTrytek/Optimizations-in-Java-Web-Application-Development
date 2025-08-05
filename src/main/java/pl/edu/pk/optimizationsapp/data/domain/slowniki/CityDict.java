@@ -29,7 +29,7 @@ import java.time.LocalDate;
 @Table(name = "sl_miejscowosc", schema = "slowniki")
 @DynamicInsert
 @DynamicUpdate
-public class SlMiejscowosc implements Serializable {
+public class CityDict implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
@@ -61,6 +61,11 @@ public class SlMiejscowosc implements Serializable {
 	@Column(name = "nazwa_miejsc", nullable = false, length = 50)
 	private String nazwaMiejsc;
 
+	@Column(name = "nazwa_miejsc_upper_ascii", nullable = false, length = 50)
+	@Size(max = 50)
+	@NotNull
+	private String nazwaMiejscUpperAscii;
+
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "kod_teryt_gminy", nullable = false)
@@ -68,11 +73,11 @@ public class SlMiejscowosc implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_teryt_powiatu")
-	private SlPowiat kodTerytPowiatu;
+	private CountyDict kodTerytPowiatu;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_teryt_wojew")
-	private SlWojewodztwo slWojewodztwo;
+	private VoivodeshipDict slWojewodztwo;
 
 	@Size(max = 2)
 	@Column(name = "rodza_miejsc", length = 2)
