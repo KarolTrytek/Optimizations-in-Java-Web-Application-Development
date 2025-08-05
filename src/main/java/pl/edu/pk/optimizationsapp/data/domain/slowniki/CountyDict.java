@@ -24,7 +24,7 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "sl_powiat", schema = "slowniki")
-public class SlPowiat implements Serializable {
+public class CountyDict implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
@@ -53,9 +53,14 @@ public class SlPowiat implements Serializable {
 	@Size(max = 50)
 	@NotNull
 	@Column(name = "nazwa_powiatu", nullable = false, length = 50)
-	private String nazwaPowiatu;
+	private String name;
+
+	@Column(name = "nazwa_powiatu_upper_ascii", nullable = false, length = 50)
+	@Size(max = 50)
+	@NotNull
+	private String nameUpperAscii;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_teryt_wojew")
-	private SlWojewodztwo kodTerytWojew;
+	private VoivodeshipDict voivodeshipCode;
 }
