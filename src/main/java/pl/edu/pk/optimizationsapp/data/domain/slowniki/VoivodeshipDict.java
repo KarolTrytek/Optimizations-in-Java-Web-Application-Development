@@ -27,7 +27,7 @@ import java.time.LocalDate;
 @Table(name = "sl_wojewodztwo", schema = "slowniki")
 @DynamicInsert
 @DynamicUpdate
-public class SlWojewodztwo implements Serializable {
+public class VoivodeshipDict implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
@@ -52,7 +52,13 @@ public class SlWojewodztwo implements Serializable {
 	@Size(max = 50)
 	@NotNull
 	@Column(name = "nazwa_wojew", nullable = false, length = 50)
-	private String nazwaWojew;
+	private String name;
+
+	@Size(max = 50)
+	@NotNull
+	@Column(name = "nazwa_wojew_upper_ascii", nullable = false, length = 50
+	)
+	private String nameUpperAscii;
 
 	@Size(max = 6)
 	@Column(name = "kod_euro_regionu", length = 6)

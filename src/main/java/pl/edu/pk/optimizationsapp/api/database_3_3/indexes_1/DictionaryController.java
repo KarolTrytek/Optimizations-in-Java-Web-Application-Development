@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pl.edu.pk.optimizationsapp.api.database_3_3.indexes_1.dto.DictionaryDto;
 import pl.edu.pk.optimizationsapp.data.domain.ofz.JobOfferStatusEnum;
 import pl.edu.pk.optimizationsapp.data.domain.ofz.LanguageEnum;
 
@@ -41,6 +42,25 @@ public class DictionaryController {
                 + " status: " + jobOfferStatus.getCode()
                 + ", limit: " + limit
                 + ", language: " + language.getName()
+                + " stop {} ms", System.currentTimeMillis() - time);
+
+        return jobTitlesDictionary;
+    }
+
+    @GetMapping("autocomplete/localization")
+    @Operation(summary = "Suggests the location of a job offer upon entering a name", operationId = "getLocalizationAutocomplete")
+    public List<DictionaryDto> getLocalizationAutocomplete(@RequestParam("name") @Parameter(description = "Name of localization", example = "Warszawa") String name,
+                                                           @RequestParam("limit") @Parameter(description = "Maximum number of localizations", example = "20") Long limit,
+                                                           @RequestParam(value = "optimized", defaultValue = "true") @Parameter(description = "Optimized query") Boolean optimized) {
+        var time = System.currentTimeMillis();
+        log.debug("getLocalizationAutocomplete start");
+
+        var jobTitlesDictionary = dictionaryService.getLocalizationAutocomplete(name, limit, optimized);
+
+        log.debug("getLocalizationAutocomplete"
+                + (optimized ? "optimized" : "not optimized")
+                + ", for given name: " + "\"" + name + "\","
+                + ", limit: " + limit
                 + " stop {} ms", System.currentTimeMillis() - time);
 
         return jobTitlesDictionary;

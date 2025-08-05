@@ -103,7 +103,7 @@ public class SlPlacowka implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_teryt_wojew")
-	private SlWojewodztwo wojewodztwo;
+	private VoivodeshipDict wojewodztwo;
 
 	@Size(max = 50)
 	@Column(name = "nazwa_miejsc")

@@ -62,9 +62,9 @@ public class SlGmina implements Serializable {
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "kod_teryt_powiatu", nullable = false)
-	private SlPowiat kodTerytPowiatu;
+	private CountyDict kodTerytPowiatu;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_teryt_wojew")
-	private SlWojewodztwo kodTerytWojew;
+	private VoivodeshipDict kodTerytWojew;
 }
