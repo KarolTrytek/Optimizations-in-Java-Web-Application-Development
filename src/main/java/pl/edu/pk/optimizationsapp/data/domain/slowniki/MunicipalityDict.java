@@ -28,7 +28,7 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "sl_gmina", schema = "slowniki")
-public class SlGmina implements Serializable {
+public class MunicipalityDict implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;

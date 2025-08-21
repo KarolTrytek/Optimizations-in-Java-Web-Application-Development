@@ -7,7 +7,7 @@ spring:
     password: postgres
     driver-class-name: org.postgresql.Driver
     hikari:
-      maximum-pool-size: 10
+      maximum-pool-size: 20
       connection-timeout: 30000
       idle-timeout: 600000
       max-lifetime: 1800000
@@ -21,3 +21,4 @@ optimization-app:
       refreschTime: "0 */10 * * * *"
   cache:
     offersCountersRefreshMinutes: ${OFFERS_COUNTERS_REFRESH_CACHE_MINUTES:10}
+    offersRefreshMinutes: ${OFFERS_COUNTERS_REFRESH_CACHE_MINUTES:5}

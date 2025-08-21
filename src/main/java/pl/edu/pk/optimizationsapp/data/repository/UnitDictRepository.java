@@ -5,12 +5,12 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import pl.edu.pk.optimizationsapp.api.database_3_3.indexes_1.dto.DataFeedStatusUnitDto;
-import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlPlacowka;
+import pl.edu.pk.optimizationsapp.data.domain.slowniki.UnitDict;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface UnitDictRepository extends JpaRepository<SlPlacowka, Long>, JpaSpecificationExecutor<SlPlacowka> {
+public interface UnitDictRepository extends JpaRepository<UnitDict, Long>, JpaSpecificationExecutor<UnitDict> {
 
     @Query(value =
             """

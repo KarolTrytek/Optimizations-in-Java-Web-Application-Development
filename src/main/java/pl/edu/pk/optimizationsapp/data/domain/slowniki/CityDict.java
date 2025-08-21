@@ -69,15 +69,15 @@ public class CityDict implements Serializable {
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "kod_teryt_gminy", nullable = false)
-	private SlGmina kodTerytGminy;
+	private MunicipalityDict municipalityDict;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_teryt_powiatu")
-	private CountyDict kodTerytPowiatu;
+	private CountyDict countyDict;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_teryt_wojew")
-	private VoivodeshipDict slWojewodztwo;
+	private VoivodeshipDict VoivodeshipDict;
 
 	@Size(max = 2)
 	@Column(name = "rodza_miejsc", length = 2)

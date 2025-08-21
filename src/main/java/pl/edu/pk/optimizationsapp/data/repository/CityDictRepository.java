@@ -12,7 +12,7 @@ public interface CityDictRepository extends JpaRepository<CityDict, String>, Jpa
 
 
     @Query("""
-            SELECT new pl.edu.pk.optimizationsapp.api.database_3_3.indexes_1.dto.CityDto (m.id, m.nazwaMiejsc, m.kodTerytPowiatu.name, m.kodTerytPowiatu.kodSprawozd, m.slWojewodztwo.name, "")
+            SELECT new pl.edu.pk.optimizationsapp.api.database_3_3.indexes_1.dto.CityDto (m.id, m.nazwaMiejsc, m.countyDict.name, m.countyDict.kodSprawozd, m.VoivodeshipDict.name, "")
             FROM CityDict m
             WHERE m.nazwaMiejscUpperAscii like concat(:name, "%")
             AND m.dataOd <= CURRENT_DATE
@@ -27,7 +27,7 @@ public interface CityDictRepository extends JpaRepository<CityDict, String>, Jpa
     List<CityDto> findByNameUpperAscii(String name);
 
     @Query("""
-            SELECT new pl.edu.pk.optimizationsapp.api.database_3_3.indexes_1.dto.CityDto (m.id, m.nazwaMiejsc, m.kodTerytPowiatu.name, m.kodTerytPowiatu.kodSprawozd, m.slWojewodztwo.name, "")
+            SELECT new pl.edu.pk.optimizationsapp.api.database_3_3.indexes_1.dto.CityDto (m.id, m.nazwaMiejsc, m.countyDict.name, m.countyDict.kodSprawozd, m.VoivodeshipDict.name, "")
             FROM CityDict m
              WHERE cast(unaccent(m.nazwaMiejsc) as string ) ilike concat(:name, "%")
             AND m.dataOd <= CURRENT_DATE

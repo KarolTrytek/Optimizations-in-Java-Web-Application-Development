@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Setter
 @Entity
 @Table(name = "licznik_ofert", schema = "ofz")
-public class LicznikOfert implements Serializable {
+public class JobOfferCounter implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
@@ -32,10 +32,6 @@ public class LicznikOfert implements Serializable {
 
 	@NotNull
 	@Column(name = "licznik", nullable = false)
-	private Integer licznik;
-
-	public void inkrementujLicznik() {
-		this.licznik += 1;
-	}
+	private Integer counter;
 
 }

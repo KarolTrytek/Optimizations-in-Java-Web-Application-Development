@@ -19,7 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
-import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlElemSlowCentr;
+import pl.edu.pk.optimizationsapp.data.domain.slowniki.ElementCentralDict;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -34,7 +34,7 @@ import java.util.Objects;
 @Builder
 @DynamicUpdate
 @Table(name = "pracodawcy", schema = "ofz")
-public class Pracodawcy implements Serializable {
+public class Employers implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
@@ -64,15 +64,15 @@ public class Pracodawcy implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_pkd")
-	private SlElemSlowCentr kodPkd;
+	private ElementCentralDict kodPkd;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_pkd2007")
-	private SlElemSlowCentr kodPkd2007;
+	private ElementCentralDict kodPkd2007;
 
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_adresu", nullable = false)
-	private Adresy idAdresu;
+	private Addresses idAdresu;
 
 	@NotNull
 	@Column(name = "agencja_zatrudnienia", nullable = false)
@@ -97,7 +97,7 @@ public class Pracodawcy implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "forma_prawna")
-	private SlElemSlowCentr formaPrawna;
+	private ElementCentralDict formaPrawna;
 
 	@Column(name = "ukarany_skazany")
 	private Boolean ukaranySkazany;
@@ -123,11 +123,11 @@ public class Pracodawcy implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_obywatelstwa")
-	private SlElemSlowCentr kodObywatelstwa;
+	private ElementCentralDict kodObywatelstwa;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_rodz_dokum_tozsam")
-	private SlElemSlowCentr kodRodzDokumTozsam;
+	private ElementCentralDict kodRodzDokumTozsam;
 
 	@Size(max = 20)
 	@Column(name = "nr_dokum_tozsam", length = 20)
@@ -153,7 +153,7 @@ public class Pracodawcy implements Serializable {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		Pracodawcy that = (Pracodawcy) o;
+		Employers that = (Employers) o;
 		return Objects.equals(id, that.id) && Objects.equals(nazwa, that.nazwa) && Objects.equals(nip, that.nip) && Objects.equals(pesel, that.pesel)
 				&& Objects.equals(regon, that.regon) && Objects.equals(kodPkd, that.kodPkd) && Objects.equals(kodPkd2007, that.kodPkd2007) && Objects.equals(
 				idAdresu, that.idAdresu) && Objects.equals(agencjaZatrudnienia, that.agencjaZatrudnienia) && Objects.equals(pracodawcaZagraniczny,

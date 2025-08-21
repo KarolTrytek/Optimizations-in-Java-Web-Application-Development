@@ -33,11 +33,11 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.SQLInsert;
 import org.hibernate.annotations.SQLUpdate;
-import pl.edu.pk.optimizationsapp.data.converter.StatusOfertyEnumConverter;
-import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlElemSlowCentr;
+import pl.edu.pk.optimizationsapp.data.converter.JobOfferStatusEnumConverter;
+import pl.edu.pk.optimizationsapp.data.domain.slowniki.ElementCentralDict;
+import pl.edu.pk.optimizationsapp.data.domain.slowniki.MunicipalityDict;
 import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlElemSlowSys;
-import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlGmina;
-import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlPlacowka;
+import pl.edu.pk.optimizationsapp.data.domain.slowniki.UnitDict;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -114,7 +114,6 @@ import java.util.Set;
 		            nr_oferty=?,
 		            odplatny=?,
 		            opis_wynagr=?,
-		            pefron=?,
 		            pensja_netto=?,
 		            potwierdzenie_wiedzy=?,
 		            powod_oddelegowania=?,
@@ -190,7 +189,7 @@ import java.util.Set;
 		imie_nazwisko_osoby_zgl,imie_nazwisko_osoby_zgl_pracod,inne_wymag,kod_jezyka,kod_kateg_oferty,kod_kraju_pochodzenia,kod_rodz_zatrud,
 		kod_syst_wynagr,kod_teryt_gminy,kod_zawodu,kod_zawodu_2010,kod_zawodu_isco,kod_zmianowosci,koszt_przej_do_polski,liczba_cv,liczba_cv_skierowania,
 		liczba_miejsc_pracy_niepel,liczba_miejsc_pracy_ogolem,liczba_mies_staz_pzd,liczba_zatrudn_skierowania,liczba_zatrudnionych,lokalizacja,
-		lokalizacja_inna,mentor_opiekun,niepelnosprawni,nr_oferty,odplatny,opis_wynagr,pefron,pensja_netto,potwierdzenie_wiedzy,powod_oddelegowania,
+		lokalizacja_inna,mentor_opiekun,niepelnosprawni,nr_oferty,odplatny,opis_wynagr,pensja_netto,potwierdzenie_wiedzy,powod_oddelegowania,
 		praca_stala,praca_tymczasowa,praca_wolne_dni,premie,przyczyna_arch_dziedzinowa,przyczyna_odrzucenia,publik_dane_pracod,rejestracja_bezposrednia,
 		spos_przek_dokum,sposob_aplikowania,stan_zatrudnienia,stanow_ofer,status,status_dziedzinowy,status_tlumaczenia,staz_wymag_ogol,subsydiowana,
 		telefon_osoby_zgl,telefon_osoby_zgl_pracod,tis_il_kand,tis_il_kand_nieprzyj,tis_il_kand_przyj,tis_il_kand_skier,tis_kand_nieprzyj_powody,
@@ -223,7 +222,7 @@ public class JobOffer implements Serializable {
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_placowki_zasilajacej", nullable = false)
-	private SlPlacowka idPlacowkiZasilajacej;
+	private UnitDict unitDict;
 
 	@Size(max = 20)
 	@NotNull
@@ -236,7 +235,7 @@ public class JobOffer implements Serializable {
 	private String nrOferty;
 
 	@NotNull
-	@Convert(converter = StatusOfertyEnumConverter.class)
+	@Convert(converter = JobOfferStatusEnumConverter.class)
 //	@Enumerated(EnumType.ORDINAL)
 	@Column(name = "status", nullable = false)
 	private JobOfferStatusEnum status;
@@ -261,20 +260,20 @@ public class JobOffer implements Serializable {
 
 	@NotNull
 	@Column(name = "liczba_miejsc_pracy_ogolem", nullable = false)
-	private Integer liczbaMiejscPracyOgolem = 0;
+	private Integer totalJobPositions = 0;
 
 	@NotNull
 	@Column(name = "liczba_miejsc_pracy_niepel", nullable = false)
-	private Integer liczbaMiejscPracyNiepel = 0;
+	private Integer disabledJobPositions = 0;
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "kod_zawodu", nullable = false)
-	private SlElemSlowCentr kodZawodu;
+	private ElementCentralDict kodZawodu;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_zawodu_isco")
-	private SlElemSlowCentr kodZawoduIsco;
+	private ElementCentralDict kodZawoduIsco;
 
 	@Column(name = "staz_wymag_ogol", precision = 9, scale = 2)
 	private BigDecimal stazWymagOgol;
@@ -285,7 +284,7 @@ public class JobOffer implements Serializable {
 	@NotNull
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_adresu_miejsca_pracy", nullable = false)
-	private Adresy adresMiejscaPracy;
+	private Addresses workplaceAddress;
 
 	@Column(name = "data_pocz_zatrud")
 	private LocalDate dataPoczZatrud;
@@ -301,15 +300,15 @@ public class JobOffer implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_waluta")
-	private SlElemSlowCentr idWaluta;
+	private ElementCentralDict currencyDict;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_syst_wynagr")
-	private SlElemSlowCentr kodSystWynagr;
+	private ElementCentralDict salarySystemCode;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_rodz_zatrud")
-	private SlElemSlowSys kodRodzZatrud;
+	private SlElemSlowSys employmentTypeCode;
 
 	@Column(name = "wymiar_zatrud", precision = 9, scale = 3)
 	private BigDecimal wymiarZatrud;
@@ -319,7 +318,7 @@ public class JobOffer implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_zmianowosci")
-	private SlElemSlowCentr kodZmianowosci;
+	private ElementCentralDict kodZmianowosci;
 
 	@Column(name = "praca_wolne_dni")
 	private Boolean pracaWolneDni = false;
@@ -344,12 +343,12 @@ public class JobOffer implements Serializable {
 
 	@NotNull
 	@Column(name = "publik_dane_pracod", nullable = false)
-	private Boolean publikDanePracod;
+	private Boolean publishEmployerData;
 
 	@NotNull
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_pracodawcy", nullable = false)
-	private Pracodawcy idPracodawcy;
+	private Employers employer;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
@@ -357,7 +356,7 @@ public class JobOffer implements Serializable {
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_adresu_aplikowania")
-	private Adresy idAdresuAplikowania;
+	private Addresses applicationAddress;
 
 	@Column(name = "adres_aplikowania_opis", length = Integer.MAX_VALUE)
 	private String adresAplikowaniaOpis;
@@ -392,17 +391,12 @@ public class JobOffer implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_kateg_oferty")
-	private SlElemSlowCentr kodKategOferty;
+	private ElementCentralDict kodKategOferty;
 
 	@NotNull
 	@Column(name = "subsydiowana", nullable = false)
 	@Builder.Default
 	private Boolean subsydiowana = false;
-
-	@NotNull
-	@Column(name = "pefron", nullable = false)
-	@Builder.Default
-	private Boolean pefron = false;
 
 	@NotNull
 	@Column(name = "eures_krajowa", nullable = false)
@@ -482,7 +476,7 @@ public class JobOffer implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_kraju_pochodzenia")
-	private SlElemSlowCentr kodKrajuPochodzenia;
+	private ElementCentralDict originCountryCode;
 
 	@Column(name = "lokalizacja", length = 1)
 	@Enumerated(EnumType.STRING)
@@ -564,7 +558,7 @@ public class JobOffer implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_teryt_gminy")
-	private SlGmina kodTerytGminy;
+	private MunicipalityDict municipalityDict;
 
 	@Size(max = 150)
 	@Column(name = "imie_nazwisko_osoby_zgl_pracod", length = 150)
@@ -580,7 +574,7 @@ public class JobOffer implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "id_adresu_aplikowania_pracod")
-	private Adresy idAdresuAplikowaniaPracod;
+	private Addresses idAdresuAplikowaniaPracod;
 
 	@Column(name = "tis_typ_inf_starosty")
 	private Boolean tisTypInfStarosty;
@@ -696,11 +690,11 @@ public class JobOffer implements Serializable {
 
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "hash", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "none"))
-	private LicznikOfert licznikOfert;
+	private JobOfferCounter jobOfferCounter;
 
 	@OneToOne(mappedBy = "jobOffer", cascade = CascadeType.ALL)
 	//@PrimaryKeyJoinColumn
-	private OfertaMetadane ofertaMetadane;
+	private JobOfferMetadata ofertaMetadane;
 
 	@OneToMany
 	@JoinColumn(name = "id_oferty_centralny")

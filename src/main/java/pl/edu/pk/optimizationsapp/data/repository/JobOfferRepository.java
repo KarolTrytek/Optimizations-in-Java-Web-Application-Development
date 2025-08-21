@@ -1,6 +1,7 @@
 package pl.edu.pk.optimizationsapp.data.repository;
 
 import org.springframework.data.domain.Limit;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -16,6 +17,16 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface JobOfferRepository extends JpaRepository<JobOffer, Long>, JpaSpecificationExecutor<JobOffer> {
+
+    @EntityGraph(attributePaths = {
+            "ofertaMetadane",
+            "kodZawodu"})
+    List<JobOffer> findByIdInAndStatus(List<Long> ids, JobOfferStatusEnum status);
+
+    @EntityGraph(attributePaths = {
+            "ofertaMetadane",
+            "kodZawodu"})
+    List<JobOffer> findByIdIn(List<Long> ids);
 
     @Query(value = """
             select j from ofz.oferty_pracy j where j.id = :id
@@ -40,13 +51,13 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long>, JpaSp
                         COUNT(CASE WHEN o.kodJezyka = 'ua' AND o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' AND o.statusTlumaczenia = 'P' THEN 1 END) AS licznikAktywnychOfertPracyUpUa,
                         COUNT(CASE WHEN o.kodJezyka = 'by' AND o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' AND o.statusTlumaczenia = 'P' THEN 1 END) AS licznikAktywnychOfertPracyUpBy,
                         COUNT(CASE WHEN o.kodJezyka = 'ru' AND o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' AND o.statusTlumaczenia = 'P' THEN 1 END) AS licznikAktywnychOfertPracyUpRu,
-                        COALESCE(SUM(CASE WHEN o.kodJezyka = 'pl' AND o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' THEN o.liczbaMiejscPracyOgolem END), 0) AS licznikMiejscPracyAktywnychOfertPracyUpPl,
-                        COALESCE(SUM(CASE WHEN o.kodJezyka = 'en' AND o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' AND o.statusTlumaczenia = 'P' THEN o.liczbaMiejscPracyOgolem END), 0) AS licznikMiejscPracyAktywnychOfertPracyUpEn,
-                        COALESCE(SUM(CASE WHEN o.kodJezyka = 'ua' AND o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' AND o.statusTlumaczenia = 'P' THEN o.liczbaMiejscPracyOgolem END), 0) AS licznikMiejscPracyAktywnychOfertPracyUpUa,
-                        COALESCE(SUM(CASE WHEN o.kodJezyka = 'by' AND o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' AND o.statusTlumaczenia = 'P' THEN o.liczbaMiejscPracyOgolem END), 0) AS licznikMiejscPracyAktywnychOfertPracyUpBy,
-                        COALESCE(SUM(CASE WHEN o.kodJezyka = 'ru' AND o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' AND o.statusTlumaczenia = 'P' THEN o.liczbaMiejscPracyOgolem END), 0) AS licznikMiejscPracyAktywnychOfertPracyUpRu
+                        COALESCE(SUM(CASE WHEN o.kodJezyka = 'pl' AND o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' THEN o.totalJobPositions END), 0) AS licznikMiejscPracyAktywnychOfertPracyUpPl,
+                        COALESCE(SUM(CASE WHEN o.kodJezyka = 'en' AND o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' AND o.statusTlumaczenia = 'P' THEN o.totalJobPositions END), 0) AS licznikMiejscPracyAktywnychOfertPracyUpEn,
+                        COALESCE(SUM(CASE WHEN o.kodJezyka = 'ua' AND o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' AND o.statusTlumaczenia = 'P' THEN o.totalJobPositions END), 0) AS licznikMiejscPracyAktywnychOfertPracyUpUa,
+                        COALESCE(SUM(CASE WHEN o.kodJezyka = 'by' AND o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' AND o.statusTlumaczenia = 'P' THEN o.totalJobPositions END), 0) AS licznikMiejscPracyAktywnychOfertPracyUpBy,
+                        COALESCE(SUM(CASE WHEN o.kodJezyka = 'ru' AND o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' AND o.statusTlumaczenia = 'P' THEN o.totalJobPositions END), 0) AS licznikMiejscPracyAktywnychOfertPracyUpRu
                     FROM JobOffer o
-                    join o.idPlacowkiZasilajacej sp
+                    join o.unitDict sp
                     where o.status = 'A' and
                         (o.tisTypInfStarosty IS NULL OR o.tisTypInfStarosty = false OR o.tisSkierKandZgoda = true)
                     and o.jobType <> 'SPOL_UZYTECZ'
@@ -59,9 +70,9 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long>, JpaSp
                     SELECT
                         COUNT(*) AS licznikAktywnychPropozycjiBezTis,
                         COUNT(CASE WHEN o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' THEN 1 END) AS licznikAktywnychOfertPracyUp,
-                        COALESCE(SUM(CASE WHEN  o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' THEN o.liczbaMiejscPracyOgolem END), 0) AS licznikMiejscPracyAktywnychOfertPracyUp
+                        COALESCE(SUM(CASE WHEN  o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' THEN o.totalJobPositions END), 0) AS licznikMiejscPracyAktywnychOfertPracyUp
                     FROM JobOffer o
-                    join o.idPlacowkiZasilajacej sp
+                    join o.unitDict sp
                     where o.status = 'A'
                     and o.kodJezyka = :language
                     and o.statusTlumaczenia = 'P'
@@ -77,9 +88,9 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long>, JpaSp
                     SELECT
                          COUNT(*) AS licznikAktywnychPropozycjiBezTisPl,
                          COUNT(CASE WHEN o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' THEN 1 END) AS licznikAktywnychOfertPracyUpPl,
-                         COALESCE(SUM(CASE WHEN o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' THEN o.liczbaMiejscPracyOgolem END), 0) AS licznikMiejscPracyAktywnychOfertPracyUpPl
+                         COALESCE(SUM(CASE WHEN o.jobType = 'OFERTA_PRACY' AND sp.typPlacowki = 'UP' THEN o.totalJobPositions END), 0) AS licznikMiejscPracyAktywnychOfertPracyUpPl
                     FROM JobOffer o
-                    join o.idPlacowkiZasilajacej sp
+                    join o.unitDict sp
                     where o.status = 'A'
                     and o.kodJezyka = 'pl'
                     and     (o.tisTypInfStarosty IS NULL OR o.tisTypInfStarosty = false OR o.tisSkierKandZgoda = true)

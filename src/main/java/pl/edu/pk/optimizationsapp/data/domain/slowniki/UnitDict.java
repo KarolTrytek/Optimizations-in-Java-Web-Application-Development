@@ -37,7 +37,7 @@ import java.time.LocalDate;
 @Table(name = "sl_placowka", schema = "slowniki")
 @DynamicInsert
 @DynamicUpdate
-public class SlPlacowka implements Serializable {
+public class UnitDict implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;

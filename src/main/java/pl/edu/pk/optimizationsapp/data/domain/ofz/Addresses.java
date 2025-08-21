@@ -22,10 +22,10 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.SQLInsert;
 import org.hibernate.annotations.SQLUpdate;
-import pl.edu.pk.optimizationsapp.data.converter.StatusOfertyEnumConverter;
-import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlElemSlowCentr;
+import pl.edu.pk.optimizationsapp.data.converter.JobOfferStatusEnumConverter;
+import pl.edu.pk.optimizationsapp.data.domain.slowniki.ElementCentralDict;
 import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlKodPocztowy;
-import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlMiejscowosc;
+import pl.edu.pk.optimizationsapp.data.domain.slowniki.CityDict;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -67,21 +67,21 @@ import java.util.Objects;
 		+ "status,telefon1,telefon2,ulica,id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
 @Table(name = "adresy", schema = "ofz")
 @ToString
-public class Adresy implements Serializable {
+public class Addresses implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "adresy_id_gen")
-	@SequenceGenerator(name = "adresy_id_gen", sequenceName = "seq_adresy", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Addresses_id_gen")
+	@SequenceGenerator(name = "Addresses_id_gen", sequenceName = "seq_adresy", allocationSize = 1)
 	@Column(name = "id", nullable = false)
 	private Long id;
 
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "kod_kraju", nullable = false)
-	private SlElemSlowCentr kodKraju;
+	private ElementCentralDict countryCode;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_pocztowy")
@@ -93,7 +93,7 @@ public class Adresy implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_teryt_miejsc")
-	private SlMiejscowosc kodTerytMiejsc;
+	private CityDict cityDict;
 
 	@Size(max = 40)
 	@Column(name = "kod_poczty_zagr", length = 40)
@@ -121,7 +121,7 @@ public class Adresy implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_euro_regionu")
-	private SlElemSlowCentr kodEuroRegionu;
+	private ElementCentralDict kodEuroRegionu;
 
 	@Size(max = 20)
 	@Column(name = "telefon1", length = 20)
@@ -142,8 +142,8 @@ public class Adresy implements Serializable {
 	@Size(max = 1)
 	@NotNull
 	@Column(name = "status", nullable = false, length = 1)
-	@Convert(converter = StatusOfertyEnumConverter.class)
-	private StatusOfertyEnum status;
+	@Convert(converter = JobOfferStatusEnumConverter.class)
+	private JobOfferStatusEnum status;
 
 	@NotNull
 	@Column(name = "data_przyj_zglosz", nullable = false)
@@ -157,24 +157,24 @@ public class Adresy implements Serializable {
 	
 	@Transient
 	public String getNazwaMiejscowosci() {
-		if (getKodTerytMiejsc() != null) {
-			return getKodTerytMiejsc().getNazwaMiejsc();
+		if (getCityDict() != null) {
+			return getCityDict().getNazwaMiejsc();
 		}
 		return null;
 	}
 
 	@Transient
 	public String getNazwaKraju() {
-		if (getKodKraju() != null) {
-			return getKodKraju().getOpisElem();
+		if (getCountryCode() != null) {
+			return getCountryCode().getOpisElem();
 		}
 		return null;
 	}
 
 	@Transient
 	public String getNazwaWojewodztwa() {
-		if (this.kodTerytMiejsc != null && this.kodTerytMiejsc.getSlWojewodztwo() != null && this.kodTerytMiejsc.getSlWojewodztwo().getNazwaWojew() != null) {
-			return this.kodTerytMiejsc.getSlWojewodztwo().getNazwaWojew();
+		if (this.cityDict != null && this.cityDict.getVoivodeshipDict() != null && this.cityDict.getVoivodeshipDict().getName() != null) {
+			return this.cityDict.getVoivodeshipDict().getName();
 		}
 		return null;
 	}
@@ -185,9 +185,9 @@ public class Adresy implements Serializable {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		Adresy adresy = (Adresy) o;
-		return Objects.equals(id, adresy.id) && Objects.equals(kodKraju, adresy.kodKraju) && Objects.equals(kodPocztowy, adresy.kodPocztowy) && Objects.equals(
-				nazwaPoczty, adresy.nazwaPoczty) && Objects.equals(kodTerytMiejsc, adresy.kodTerytMiejsc) && Objects.equals(kodPocztyZagr, adresy.kodPocztyZagr)
+		Addresses adresy = (Addresses) o;
+		return Objects.equals(id, adresy.id) && Objects.equals(countryCode, adresy.countryCode) && Objects.equals(kodPocztowy, adresy.kodPocztowy) && Objects.equals(
+				nazwaPoczty, adresy.nazwaPoczty) && Objects.equals(cityDict, adresy.cityDict) && Objects.equals(kodPocztyZagr, adresy.kodPocztyZagr)
 				&& Objects.equals(nazwaMiejscZagr, adresy.nazwaMiejscZagr) && Objects.equals(ulica, adresy.ulica) && Objects.equals(nrDomu, adresy.nrDomu)
 				&& Objects.equals(nrLokalu, adresy.nrLokalu) && Objects.equals(nrSkrPoczt, adresy.nrSkrPoczt) && Objects.equals(kodEuroRegionu,
 				adresy.kodEuroRegionu) && Objects.equals(telefon1, adresy.telefon1) && Objects.equals(telefon2, adresy.telefon2) && Objects.equals(fax,
@@ -197,7 +197,7 @@ public class Adresy implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, kodKraju, kodPocztowy, nazwaPoczty, kodTerytMiejsc, kodPocztyZagr, nazwaMiejscZagr, ulica, nrDomu, nrLokalu, nrSkrPoczt,
+		return Objects.hash(id, countryCode, kodPocztowy, nazwaPoczty, cityDict, kodPocztyZagr, nazwaMiejscZagr, ulica, nrDomu, nrLokalu, nrSkrPoczt,
 				kodEuroRegionu, telefon1, telefon2, fax, email, status, dataPrzyjZglosz, latitude, longitude);
 	}
 }

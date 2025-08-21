@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum TypOfertyEnum {
 
 	OFERTA_PRACY ("oferta pracy",   "cbop.i18n.typOfertyEnum.ofertaPracy"),
-	STAZ ("staż",   "cbop.i18n.typOfertyEnum.staz"),
+	STAZ ("staż",   "cbop.i18n.typOfertyEnum.workExperience"),
 	PRAKTYKI ("praktyka",  "cbop.i18n.typOfertyEnum.praktyki"),
 	PRAKT_STUDENT ("praktyka studencka",  "cbop.i18n.typOfertyEnum.praktykaStudent"),
 	SPOL_UZYTECZ ("prace społecznie użyteczne","cbop.i18n.typOfertyEnum.spoolUzyteczne"),

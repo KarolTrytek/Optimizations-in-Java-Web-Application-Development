@@ -10,6 +10,7 @@ import org.ehcache.jsr107.EhcacheCachingProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.SimpleKey;
 import org.springframework.cache.jcache.JCacheCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +27,9 @@ public class CacheConfig implements CachingConfigurer {
 
     @Value("${optimization-app.cache.offersCountersRefreshMinutes}")
     Integer offersEventsCountersRefreshMinutes;
+
+    @Value("${optimization-app.cache.offersRefreshMinutes}")
+    Integer jobOffersRefreshMinutes;
 
 
     @Bean
@@ -52,6 +56,12 @@ public class CacheConfig implements CachingConfigurer {
                         ResourcePoolsBuilder.newResourcePoolsBuilder().offheap(5, MemoryUnit.MB).build())
                 .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMinutes(offersEventsCountersRefreshMinutes))).build();
         caches.put(CacheKeys.OFFERS_COUNTERS, offersEventsCountersCache);
+
+        CacheConfiguration<SimpleKey, Object> jobOffersCache = CacheConfigurationBuilder
+                .newCacheConfigurationBuilder(SimpleKey.class, Object.class,
+                        ResourcePoolsBuilder.newResourcePoolsBuilder().offheap(100, MemoryUnit.MB).build())
+                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofMinutes(jobOffersRefreshMinutes))).build();
+        caches.put(CacheKeys.JOB_OFFERS, jobOffersCache);
 
         return caches;
     }
