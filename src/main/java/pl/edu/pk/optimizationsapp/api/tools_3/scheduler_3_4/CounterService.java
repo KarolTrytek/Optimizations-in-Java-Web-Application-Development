@@ -1,4 +1,4 @@
-package pl.edu.pk.optimizationsapp.api.tools.scheduler;
+package pl.edu.pk.optimizationsapp.api.tools_3.scheduler_3_4;
 
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
@@ -7,17 +7,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import pl.edu.pk.optimizationsapp.api.tools.scheduler.dto.CounterDto;
+import pl.edu.pk.optimizationsapp.api.tools_3.scheduler_3_4.dto.CounterDto;
 import pl.edu.pk.optimizationsapp.data.domain.adm.Counters;
 import pl.edu.pk.optimizationsapp.data.domain.custion.IJobOfferCounter;
 import pl.edu.pk.optimizationsapp.data.domain.ofz.JobOffer;
+import pl.edu.pk.optimizationsapp.data.domain.ofz.JobOfferStatusEnum;
 import pl.edu.pk.optimizationsapp.data.domain.ofz.JobOffer_;
 import pl.edu.pk.optimizationsapp.data.domain.ofz.LanguageEnum;
-import pl.edu.pk.optimizationsapp.data.domain.ofz.StatusOfertyEnum;
 import pl.edu.pk.optimizationsapp.data.domain.ofz.StatusTlumaczeniaEnum;
 import pl.edu.pk.optimizationsapp.data.domain.ofz.TypOfertyEnum;
-import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlPlacowka;
-import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlPlacowka_;
+import pl.edu.pk.optimizationsapp.data.domain.slowniki.UnitDict;
+import pl.edu.pk.optimizationsapp.data.domain.slowniki.UnitDict_;
 import pl.edu.pk.optimizationsapp.data.repository.CountersRepository;
 import pl.edu.pk.optimizationsapp.data.repository.JobOfferRepository;
 import pl.edu.pk.optimizationsapp.utils.CacheKeys;
@@ -112,7 +112,7 @@ public class CounterService {
         return jobOfferRepository.count((root, query, cb) -> {
             List<Predicate> predicatesList = new ArrayList<>();
 
-            JPAUtils.setEqual(root, cb, predicatesList, JobOffer_.STATUS, StatusOfertyEnum.AKTYWNE.getCode());
+            JPAUtils.setEqual(root, cb, predicatesList, JobOffer_.STATUS, JobOfferStatusEnum.ACTIVE.getCode());
             JPAUtils.setNotEqual(root, cb, predicatesList, JobOffer_.JOB_TYPE, TypOfertyEnum.SPOL_UZYTECZ);
             JPAUtils.setEqual(root, cb, predicatesList, JobOffer_.KOD_JEZYKA, language.getId());
 
@@ -135,11 +135,11 @@ public class CounterService {
         return jobOfferRepository.count((root, query, cb) -> {
             List<Predicate> predicatesList = new ArrayList<>();
 
-            JPAUtils.setEqual(root, cb, predicatesList, JobOffer_.STATUS, StatusOfertyEnum.AKTYWNE.getCode());
+            JPAUtils.setEqual(root, cb, predicatesList, JobOffer_.STATUS, JobOfferStatusEnum.ACTIVE.getCode());
             JPAUtils.setEqual(root, cb, predicatesList, JobOffer_.JOB_TYPE, TypOfertyEnum.OFERTA_PRACY);
 
-            Join<JobOffer, SlPlacowka> placowkaJoin = root.join(JobOffer_.ID_PLACOWKI_ZASILAJACEJ, JoinType.INNER);
-            JPAUtils.setEqual(placowkaJoin, cb, predicatesList, SlPlacowka_.TYP_PLACOWKI, UP);
+            Join<JobOffer, UnitDict> placowkaJoin = root.join(JobOffer_.UNIT_DICT, JoinType.INNER);
+            JPAUtils.setEqual(placowkaJoin, cb, predicatesList, UnitDict_.TYP_PLACOWKI, UP);
 
             if (jezyk != LanguageEnum.PL) {
                 JPAUtils.setEqual(root, cb, predicatesList, JobOffer_.STATUS_TLUMACZENIA, StatusTlumaczeniaEnum.P);

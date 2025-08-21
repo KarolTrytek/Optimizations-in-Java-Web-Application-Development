@@ -1,4 +1,4 @@
-package pl.edu.pk.optimizationsapp.api.tools.scheduler;
+package pl.edu.pk.optimizationsapp.api.tools_3.scheduler_3_4;
 
 import lombok.RequiredArgsConstructor;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
@@ -15,7 +15,7 @@ public class CounterCalculationTask {
     @Scheduled(cron = "${optimization-app.proces.calculate-counters.refreschTime}")
     @SchedulerLock(name = "calculateCounters")
     @Transactional
-    public void przygotujLiczniki() {
+    public void calculateCounters() {
         this.counterService.calculateCounters();
     }
 

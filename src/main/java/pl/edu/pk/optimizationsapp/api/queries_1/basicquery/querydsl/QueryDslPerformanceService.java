@@ -1,4 +1,4 @@
-package pl.edu.pk.optimizationsapp.api.basicquery.querydsl;
+package pl.edu.pk.optimizationsapp.api.queries_1.basicquery.querydsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

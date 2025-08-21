@@ -1,4 +1,4 @@
-package pl.edu.pk.optimizationsapp.api.tools.scheduler.dto;
+package pl.edu.pk.optimizationsapp.api.tools_3.scheduler_3_4.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

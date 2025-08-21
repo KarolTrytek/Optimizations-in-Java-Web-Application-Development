@@ -1,4 +1,4 @@
-package pl.edu.pk.optimizationsapp.api.basicquery.springdatajpa;
+package pl.edu.pk.optimizationsapp.api.queries_1.basicquery.springdatajpa;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

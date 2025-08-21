@@ -1,4 +1,4 @@
-package pl.edu.pk.optimizationsapp.api.basicquery.criteriaapi;
+package pl.edu.pk.optimizationsapp.api.queries_1.basicquery.criteriaapi;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

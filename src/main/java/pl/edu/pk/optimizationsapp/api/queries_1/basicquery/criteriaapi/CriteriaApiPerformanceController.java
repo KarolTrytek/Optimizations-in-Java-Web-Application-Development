@@ -1,4 +1,4 @@
-package pl.edu.pk.optimizationsapp.api.basicquery.criteriaapi;
+package pl.edu.pk.optimizationsapp.api.queries_1.basicquery.criteriaapi;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,11 +30,11 @@ public class CriteriaApiPerformanceController {
     @Operation(summary = "Returns an offer for the identifier", operationId = "getJobOfferById")
     public String getJobOfferById(@PathVariable() Long id) {
         var time = System.currentTimeMillis();
-        log.debug("getOfertyPracyById one attempt start");
+        log.debug("getJobOfferById one attempt start");
 
         criteriaApiPerformanceService.getOfertaPracyById(id);
 
-        log.debug("getOfertyPracyById one attempt stop {} ms", System.currentTimeMillis() - time);
+        log.debug("getJobOfferById one attempt stop {} ms", System.currentTimeMillis() - time);
         return  "Getting an job offer with id: " + id +" using Criteria API took: " + (System.currentTimeMillis() - time) + "ms";
 
     }
@@ -43,13 +43,13 @@ public class CriteriaApiPerformanceController {
     @Operation(summary = "Searches for an offer for the identifier a specified number of times ", operationId = "getJobOfferByIdForMoreAttempts")
     public String getJobOfferByIdForMoreAttempts(@PathVariable(value = "id") Long id, @PathVariable(value = "attempts") Integer attempts) {
         var time = System.currentTimeMillis();
-        log.debug("findOfertyPracyById start, attempts {}", attempts);
+        log.debug("findJobOfferById start, attempts {}", attempts);
 
         for (int i = 0; i < attempts; i++) {
             criteriaApiPerformanceService.getOfertaPracyById(id);
         }
 
-        log.debug("getOfertyPracyById stop {} ms, attempts {}", System.currentTimeMillis() - time, attempts);
+        log.debug("getJobOfferById stop {} ms, attempts {}", System.currentTimeMillis() - time, attempts);
         return "Getting  an job offer with id: " + id + " for " + attempts + " attempts using Criteria API took: " + (System.currentTimeMillis() - time) + "ms";
     }
 

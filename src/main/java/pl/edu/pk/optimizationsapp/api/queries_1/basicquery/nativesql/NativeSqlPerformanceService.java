@@ -1,4 +1,4 @@
-package pl.edu.pk.optimizationsapp.api.basicquery.nativesql;
+package pl.edu.pk.optimizationsapp.api.queries_1.basicquery.nativesql;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
