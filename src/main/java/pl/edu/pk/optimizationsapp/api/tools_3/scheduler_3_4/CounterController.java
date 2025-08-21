@@ -1,4 +1,4 @@
-package pl.edu.pk.optimizationsapp.api.tools.scheduler;
+package pl.edu.pk.optimizationsapp.api.tools_3.scheduler_3_4;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pl.edu.pk.optimizationsapp.api.tools.scheduler.dto.CounterDto;
+import pl.edu.pk.optimizationsapp.api.tools_3.scheduler_3_4.dto.CounterDto;
 import pl.edu.pk.optimizationsapp.data.domain.ofz.LanguageEnum;
 
 @Slf4j

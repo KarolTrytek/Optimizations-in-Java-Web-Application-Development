@@ -1,4 +1,4 @@
-package pl.edu.pk.optimizationsapp.api.basicquery.jpql;
+package pl.edu.pk.optimizationsapp.api.queries_1.basicquery.jpql;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
