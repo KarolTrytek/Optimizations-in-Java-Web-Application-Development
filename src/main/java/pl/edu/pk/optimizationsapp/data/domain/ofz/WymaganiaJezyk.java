@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlElemSlowCentr;
+import pl.edu.pk.optimizationsapp.data.domain.slowniki.ElementCentralDict;
 import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlElemSlowSys;
 
 import java.io.Serial;
@@ -45,7 +45,7 @@ public class WymaganiaJezyk implements Serializable {
 	@NotNull
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "id_jezyka_obcego", nullable = false)
-	private SlElemSlowCentr idJezykaObcego;
+	private ElementCentralDict idJezykaObcego;
 
 	@NotNull
 	@ManyToOne(optional = false)

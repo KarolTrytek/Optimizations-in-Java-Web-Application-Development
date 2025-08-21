@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlElemSlowCentr;
+import pl.edu.pk.optimizationsapp.data.domain.slowniki.ElementCentralDict;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -45,7 +45,7 @@ public class WymaganiaPredyspozycje implements Serializable {
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "kod_pred", nullable = false)
-	private SlElemSlowCentr kodPred;
+	private ElementCentralDict kodPred;
 
 	@Size(max = 10)
 	@NotNull

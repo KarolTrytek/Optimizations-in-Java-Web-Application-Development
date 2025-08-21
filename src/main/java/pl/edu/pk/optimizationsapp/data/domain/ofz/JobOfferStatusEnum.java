@@ -7,18 +7,18 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
-public enum StatusOfertyEnum {
+public enum JobOfferStatusEnum {
 
 	W_PRZYGOTOWANIU("P"),
 	ODRZUCONE("O"),
-	AKTYWNE("A"),
-	ARCHIWALNE( "H");
+	ACTIVE("A"),
+	ARCHIVE( "H");
 
 	private final String code;
 
-	private static final Map<String, StatusOfertyEnum> MAP;
+	private static final Map<String, JobOfferStatusEnum> MAP;
 
-    StatusOfertyEnum(String code) {
+    JobOfferStatusEnum(String code) {
         this.code = code;
     }
 
@@ -28,13 +28,13 @@ public enum StatusOfertyEnum {
 	 * @param input the value
 	 * @return enumerator
 	 */
-	public static StatusOfertyEnum parse(String input) {
+	public static JobOfferStatusEnum parse(String input) {
 		return (input != null ? MAP.get(input) : null);
 	}
 
 	static {
-		Map<String, StatusOfertyEnum> map = new ConcurrentHashMap<>();
-		for (StatusOfertyEnum instance : StatusOfertyEnum.values()) {
+		Map<String, JobOfferStatusEnum> map = new ConcurrentHashMap<>();
+		for (JobOfferStatusEnum instance : JobOfferStatusEnum.values()) {
 			map.put(instance.getCode(), instance);
 		}
 		MAP = Collections.unmodifiableMap(map);

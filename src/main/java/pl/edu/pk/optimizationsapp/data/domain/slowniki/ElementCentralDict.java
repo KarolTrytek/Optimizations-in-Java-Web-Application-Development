@@ -17,6 +17,6 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicInsert
 @DynamicUpdate
 @ToString(callSuper = true)
-public class SlElemSlowCentr extends SlElemSlowBase {
+public class ElementCentralDict extends SlElemSlowBase {
 
 }

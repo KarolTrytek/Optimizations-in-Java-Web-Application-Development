@@ -16,7 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlElemSlowCentr;
+import pl.edu.pk.optimizationsapp.data.domain.slowniki.ElementCentralDict;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -46,7 +46,7 @@ public class WymaganiaZawod implements Serializable {
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "kod_zawodu", nullable = false)
-	private SlElemSlowCentr kodZawodu;
+	private ElementCentralDict kodZawodu;
 
 	@Size(max = 10)
 	@NotNull
@@ -62,7 +62,7 @@ public class WymaganiaZawod implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kod_poziomu_kwalif_zawod")
-	private SlElemSlowCentr kodPoziomuKwalifZawod;
+	private ElementCentralDict kodPoziomuKwalifZawod;
 
 	@Size(max = 20)
 	@Column(name = "id_wymagania_dziedzinowy", length = 20)

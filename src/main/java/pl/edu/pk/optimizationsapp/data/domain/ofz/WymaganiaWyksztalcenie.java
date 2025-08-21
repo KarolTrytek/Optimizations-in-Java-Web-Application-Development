@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlElemSlowCentr;
+import pl.edu.pk.optimizationsapp.data.domain.slowniki.ElementCentralDict;
 import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlElemSlowSys;
 
 import java.io.Serial;
@@ -50,7 +50,7 @@ public class WymaganiaWyksztalcenie implements Serializable {
 	@NotNull
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "kod_typu_wykszt", nullable = false)
-	private SlElemSlowCentr kodTypuWykszt;
+	private ElementCentralDict kodTypuWykszt;
 
 	@Size(max = 10)
 	@NotNull

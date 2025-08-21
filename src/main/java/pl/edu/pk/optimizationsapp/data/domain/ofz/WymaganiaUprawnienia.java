@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlElemSlowCentr;
+import pl.edu.pk.optimizationsapp.data.domain.slowniki.ElementCentralDict;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -62,7 +62,7 @@ public class WymaganiaUprawnienia implements Serializable {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "kod_uprawnienia")
-	private SlElemSlowCentr kodUprawnienia;
+	private ElementCentralDict kodUprawnienia;
 
     @Transient
     public boolean isUprawnienieZeSlownika() {

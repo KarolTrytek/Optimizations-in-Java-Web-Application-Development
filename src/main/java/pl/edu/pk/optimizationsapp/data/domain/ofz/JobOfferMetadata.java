@@ -28,7 +28,7 @@ import java.util.Objects;
 @DynamicUpdate
 @Entity
 @Table(name = "oferta_metadane", schema = "ofz", uniqueConstraints = @UniqueConstraint(columnNames = "id_oferty_centralny"))
-public class OfertaMetadane implements Serializable {
+public class JobOfferMetadata implements Serializable {
 
 	@Serial
 	private static final long serialVersionUID = 1L;
@@ -53,13 +53,13 @@ public class OfertaMetadane implements Serializable {
 
 	@NotNull
 	@Column(name = "data_zgloszenia_cbop", nullable = false)
-	private LocalDateTime dataZgloszeniaCbop;
+	private LocalDateTime systemSubmissionDate;
 
 	@Column(name = "data_ost_modyfikacji_cbop")
-	private LocalDateTime dataOstModyfikacjiCbop;
+	private LocalDateTime lastModifiedDate;
 
 	@Column(name = "data_usuniecia_cbop")
-	private LocalDateTime dataUsunieciaCbop;
+	private LocalDateTime deletionDate;
 
 	@Override
 	public boolean equals(Object o) {
@@ -67,14 +67,14 @@ public class OfertaMetadane implements Serializable {
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		OfertaMetadane that = (OfertaMetadane) o;
+		JobOfferMetadata that = (JobOfferMetadata) o;
 		return Objects.equals(id, that.id) && Objects.equals(jobOffer, that.jobOffer) && Objects.equals(idKomAdd, that.idKomAdd) && Objects.equals(
-				idKomMod, that.idKomMod) && Objects.equals(idKomDel, that.idKomDel) && Objects.equals(dataZgloszeniaCbop, that.dataZgloszeniaCbop)
-				&& Objects.equals(dataOstModyfikacjiCbop, that.dataOstModyfikacjiCbop) && Objects.equals(dataUsunieciaCbop, that.dataUsunieciaCbop);
+				idKomMod, that.idKomMod) && Objects.equals(idKomDel, that.idKomDel) && Objects.equals(systemSubmissionDate, that.systemSubmissionDate)
+				&& Objects.equals(lastModifiedDate, that.lastModifiedDate) && Objects.equals(deletionDate, that.deletionDate);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, jobOffer, idKomAdd, idKomMod, idKomDel, dataZgloszeniaCbop, dataOstModyfikacjiCbop, dataUsunieciaCbop);
+		return Objects.hash(id, jobOffer, idKomAdd, idKomMod, idKomDel, systemSubmissionDate, lastModifiedDate, deletionDate);
 	}
 }

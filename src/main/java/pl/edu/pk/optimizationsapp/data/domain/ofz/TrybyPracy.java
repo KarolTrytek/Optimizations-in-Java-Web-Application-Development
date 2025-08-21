@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.edu.pk.optimizationsapp.data.domain.slowniki.SlElemSlowCentr;
+import pl.edu.pk.optimizationsapp.data.domain.slowniki.ElementCentralDict;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -44,5 +44,5 @@ public class TrybyPracy implements Serializable {
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "id_trybu_pracy", nullable = false)
-	private SlElemSlowCentr idTrybuPracy;
+	private ElementCentralDict idTrybuPracy;
 }
